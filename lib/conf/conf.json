@@ -1,0 +1,4 @@
+{
+    "client": "FundacaoPenteado",
+    "executable": '"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --incognito --app="http://clinica.rtools.com.br:7074/ClinicaIntegrada/FundacaoPenteado/"'
+}

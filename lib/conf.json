@@ -1,0 +1,10 @@
+{
+	"ip": "192.168.1.60",
+	"project": "",
+	"port": "5434",
+    "client": "FundacaoPenteado",
+    "executable": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+	"parans":"--incognito",
+	"url":"clinica.rtools.com.br:7074/ClinicaIntegrada/FundacaoPenteado/",
+	"app":"true"
+}

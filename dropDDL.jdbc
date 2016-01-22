@@ -1,0 +1,58 @@
+ALTER TABLE pes_pessoa_endereco DROP CONSTRAINT FK_pes_pessoa_endereco_id_pessoa
+ALTER TABLE pes_pessoa_endereco DROP CONSTRAINT FK_pes_pessoa_endereco_id_tipo_endereco
+ALTER TABLE pes_pessoa_endereco DROP CONSTRAINT FK_pes_pessoa_endereco_id_endereco
+ALTER TABLE fin_caixa DROP CONSTRAINT FK_fin_caixa_id_filial
+ALTER TABLE fin_caixa DROP CONSTRAINT UNQ_fin_caixa_0
+ALTER TABLE pes_biometria_servidor DROP CONSTRAINT FK_pes_biometria_servidor_id_mac_filial
+ALTER TABLE pes_biometria_catraca DROP CONSTRAINT FK_pes_biometria_catraca_id_pessoa
+ALTER TABLE pes_biometria DROP CONSTRAINT FK_pes_biometria_id_pessoa
+ALTER TABLE sis_configuracao DROP CONSTRAINT FK_sis_configuracao_id_juridica
+ALTER TABLE seg_usuario DROP CONSTRAINT FK_seg_usuario_id_pessoa
+ALTER TABLE pes_pessoa_empresa DROP CONSTRAINT FK_pes_pessoa_empresa_id_juridica
+ALTER TABLE pes_pessoa_empresa DROP CONSTRAINT FK_pes_pessoa_empresa_id_funcao
+ALTER TABLE pes_pessoa_empresa DROP CONSTRAINT FK_pes_pessoa_empresa_id_fisica
+ALTER TABLE pes_biometria_captura DROP CONSTRAINT FK_pes_biometria_captura_id_pessoa
+ALTER TABLE pes_biometria_captura DROP CONSTRAINT FK_pes_biometria_captura_id_mac_filial
+ALTER TABLE pes_juridica DROP CONSTRAINT FK_pes_juridica_id_porte
+ALTER TABLE pes_juridica DROP CONSTRAINT FK_pes_juridica_id_pessoa
+ALTER TABLE pes_juridica DROP CONSTRAINT FK_pes_juridica_id_contabilidade
+ALTER TABLE pes_juridica DROP CONSTRAINT FK_pes_juridica_id_cnae
+ALTER TABLE pes_filial DROP CONSTRAINT FK_pes_filial_id_filial
+ALTER TABLE pes_filial DROP CONSTRAINT FK_pes_filial_id_matriz
+ALTER TABLE pes_filial DROP CONSTRAINT UNQ_pes_filial_0
+ALTER TABLE seg_mac_filial DROP CONSTRAINT FK_seg_mac_filial_id_departamento
+ALTER TABLE seg_mac_filial DROP CONSTRAINT FK_seg_mac_filial_id_filial
+ALTER TABLE seg_mac_filial DROP CONSTRAINT FK_seg_mac_filial_id_caixa
+ALTER TABLE end_endereco DROP CONSTRAINT FK_end_endereco_id_logradouro
+ALTER TABLE end_endereco DROP CONSTRAINT FK_end_endereco_id_bairro
+ALTER TABLE end_endereco DROP CONSTRAINT FK_end_endereco_id_descricao_endereco
+ALTER TABLE end_endereco DROP CONSTRAINT FK_end_endereco_id_cidade
+ALTER TABLE pes_pessoa DROP CONSTRAINT FK_pes_pessoa_id_tipo_documento
+ALTER TABLE pes_fisica DROP CONSTRAINT FK_pes_fisica_id_pessoa
+DROP TABLE pes_pessoa_endereco
+DROP TABLE end_bairro
+DROP TABLE fin_caixa
+DROP TABLE end_logradouro
+DROP TABLE pes_tipo_documento
+DROP TABLE pes_porte
+DROP TABLE pes_biometria_servidor
+DROP TABLE pes_biometria_catraca
+DROP TABLE pes_nacionalidade
+DROP TABLE pes_biometria
+DROP TABLE sis_configuracao
+DROP TABLE seg_departamento
+DROP TABLE pes_profissao
+DROP TABLE pes_tipo_endereco
+DROP TABLE end_cidade
+DROP TABLE seg_usuario
+DROP TABLE pes_pessoa_empresa
+DROP TABLE pes_biometria_captura
+DROP TABLE pes_juridica
+DROP TABLE pes_filial
+DROP TABLE seg_mac_filial
+DROP TABLE pes_cnae
+DROP TABLE end_endereco
+DROP TABLE pes_biometria_atualiza_catraca
+DROP TABLE pes_pessoa
+DROP TABLE end_descricao_endereco
+DROP TABLE pes_fisica

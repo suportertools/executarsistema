@@ -22,11 +22,11 @@ public class DB {
             String databaseName = "";
             databaseName = conf.getClient();
             Configuracao configuracao = servidor(databaseName);
-            String port = "";
+            Integer port = 0;
             if (conf.getIp() != null || !conf.getIp().isEmpty()) {
                 configuracao.setHost(conf.getIp());
             }
-            if (conf.getPort() != null || !conf.getPort().isEmpty()) {
+            if (conf.getPort() != null || conf.getPort() != 0) {
                 port = conf.getPort();
             }
             try {

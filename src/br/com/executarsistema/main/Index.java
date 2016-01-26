@@ -91,7 +91,7 @@ public final class Index extends JFrame {
             String url = "";
             url += "\"" + conf.getExecutable() + "\" ";
             url += " " + conf.getParans() + " ";
-            if (conf.getApp()) {
+            if (conf.getApp_browser()) {
                 url += " --app=\"http://" + conf.getUrl() + "?filial=" + mac + "\"";
             } else {
                 url += " \"http://" + conf.getUrl() + "?filial=" + mac + "\"";

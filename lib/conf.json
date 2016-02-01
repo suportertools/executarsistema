@@ -1,10 +1,11 @@
 {
-	"ip": "192.168.1.60",
+	"ip": "192.168.1.100",
 	"project": "",
-	"port": "5434",
-    "client": "FundacaoPenteado",
-    "executable": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+	"port": 5432,
+	"context": "Sindical",
+    "client": "Sindical",
+    "executable": "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe",
 	"parans":"--incognito",
-	"url":"clinica.rtools.com.br:7074/ClinicaIntegrada/FundacaoPenteado/",
-	"app":"true"
+	"url":"sindical.rtools.com.br:7070/Sindical/",
+	"app_browser": false
 }

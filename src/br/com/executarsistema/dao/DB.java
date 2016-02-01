@@ -2,6 +2,7 @@ package br.com.executarsistema.dao;
 
 import br.com.executarsistema.seguranca.Conf;
 import br.com.executarsistema.sistema.Configuracao;
+import br.com.executarsistema.utils.DataBase;
 import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.EntityManager;
@@ -22,12 +23,20 @@ public class DB {
             String databaseName = "";
             databaseName = conf.getClient();
             Configuracao configuracao = servidor(databaseName);
-            Integer port = 0;
-            if (conf.getIp() != null || !conf.getIp().isEmpty()) {
-                configuracao.setHost(conf.getIp());
+            DataBase dataBase = new DataBase();
+            dataBase.loadJson();
+            Integer port = 5432;
+            if (dataBase.getHost() != null && !dataBase.getHost().isEmpty()) {
+                configuracao.setHost(dataBase.getHost());
             }
-            if (conf.getPort() != null || conf.getPort() != 0) {
-                port = conf.getPort();
+            if (dataBase.getPort() != null && dataBase.getPort() != 0) {
+                port = dataBase.getPort();
+            }
+            if (!dataBase.getDatabase().isEmpty()) {
+                configuracao.setPersistence(dataBase.getDatabase());
+            }
+            if (!dataBase.getPassword().isEmpty()) {
+                configuracao.setSenha(dataBase.getPassword());
             }
             try {
                 Map properties = new HashMap();
@@ -39,7 +48,7 @@ public class DB {
                 properties.put(TopLinkProperties.JDBC_DRIVER, "org.postgresql.Driver");
                 properties.put(TopLinkProperties.JDBC_PASSWORD, configuracao.getSenha());
                 properties.put(TopLinkProperties.JDBC_URL, "jdbc:postgresql://" + configuracao.getHost() + ":" + port + "/" + configuracao.getPersistence());
-                EntityManagerFactory emf = Persistence.createEntityManagerFactory(configuracao.getPersistence(), properties);
+                EntityManagerFactory emf = Persistence.createEntityManagerFactory("Persistence", properties);
                 String createTable = "";
                 if (createTable.equals("criar")) {
                     properties.put(EntityManagerFactoryProvider.DDL_GENERATION, EntityManagerFactoryProvider.CREATE_ONLY);

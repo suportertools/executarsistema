@@ -89,12 +89,22 @@ public final class Index extends JFrame {
         }
         try {
             String url = "";
+            String context = "";
             url += "\"" + conf.getExecutable() + "\" ";
-            url += " " + conf.getParans() + " ";
+            if (!conf.getExecutable().contains("firefox")) {
+                url += " " + conf.getParans() + " ";
+            }
+            if (!conf.getContext().isEmpty()) {
+                context = conf.getContext() + "/";
+            }
             if (conf.getApp_browser()) {
-                url += " --app=\"http://" + conf.getUrl() + "?filial=" + mac + "\"";
+                if (!conf.getExecutable().contains("firefox")) {
+                    url += " --app=\"http://" + conf.getUrl() + context + "?filial=" + mac + "\"";
+                } else {
+                    url += " \"http://" + conf.getUrl() + context + "?filial=" + mac + "\"";
+                }
             } else {
-                url += " \"http://" + conf.getUrl() + "?filial=" + mac + "\"";
+                url += " \"http://" + conf.getUrl() + context + "?filial=" + mac + "\"";
             }
             Runtime.getRuntime().exec(url);
         } catch (Exception e) {

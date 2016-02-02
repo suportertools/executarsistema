@@ -111,7 +111,7 @@ public class WebService {
         }
         if(!cws.getContext().isEmpty()) {
             urlString += cws.getContext() + "/ws/" + page;
-        }
+        } 
         for (int i = 0; i < urlParams.size(); i++) {
             if (i == 0) {
                 urlString += "?" + urlParams.get(i).toString();

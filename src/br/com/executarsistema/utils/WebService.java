@@ -1,6 +1,7 @@
 package br.com.executarsistema.utils;
 
 import br.com.executarsistema.seguranca.Conf;
+import br.com.executarsistema.sistema.conf.ConfWebService;
 import java.awt.HeadlessException;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,37 +33,37 @@ public class WebService {
         return execute(page, "DELETE", action, params);
     }
 
-    public static Object execute(String page, String method, String action, String params) {
+    public static JSONObject execute(String page, String method, String action, String params) {
         String mac = Mac.getInstance();
-        Conf conf = new Conf();
-        conf.loadJson();
+        ConfWebService cws = new ConfWebService();
+        cws.loadJson();
         String urlString = "";
-        if (conf.getSsl()) {
+        if (cws.getSsl()) {
             urlString += "https://";
         } else {
             urlString += "http://";
         }
         Boolean errors = false;
         String string_errors = "";
-        if (conf.getIp().isEmpty()) {
+        if (cws.getUrl().isEmpty()) {
             errors = true;
-            string_errors += "ip; ";
+            string_errors += "url; ";
         }
-        if (conf.getUser().isEmpty()) {
+        if (cws.getUser().isEmpty()) {
             string_errors += "user; ";
         }
-        if (conf.getPassword().isEmpty()) {
+        if (cws.getPassword().isEmpty()) {
             string_errors += "password; ";
         }
-        if (conf.getClient().isEmpty()) {
+        if (cws.getClient().isEmpty()) {
             string_errors += "client; ";
         }
-        if (conf.getApp().isEmpty()) {
-            string_errors += "app; ";
-        }
-        if (conf.getKey().isEmpty()) {
-            string_errors += "key; ";
-        }
+//        if (cws.getApp().isEmpty()) {
+//            string_errors += "app; ";
+//        }
+//        if (cws.getKey().isEmpty()) {
+//            string_errors += "key; ";
+//        }
         if (params.isEmpty()) {
             string_errors += "page not found; ";
         }
@@ -79,25 +80,22 @@ public class WebService {
             System.exit(0);
         }
         List urlParams = new ArrayList<>();
-        if (conf.getPort() == null || conf.getPort() == 80 || conf.getPort() == 0) {
-            urlString += conf.getIp() + "/";
+        if (cws.getPort() == null || cws.getPort() == 80 || cws.getPort() == 0) {
+            urlString += cws.getUrl() + "/";
         } else {
-            urlString += conf.getIp() + ":" + conf.getPort() + "/";
+            urlString += cws.getUrl() + ":" + cws.getPort() + "/";
         }
-        if (!conf.getUser().isEmpty()) {
-            urlParams.add("user=" + conf.getUser());
+        if (!cws.getUser().isEmpty()) {
+            urlParams.add("user=" + cws.getUser());
         }
-        if (!conf.getUser().isEmpty()) {
-            urlParams.add("user=" + conf.getUser());
+        if (!cws.getPassword().isEmpty()) {
+            urlParams.add("password=" + cws.getPassword());
         }
-        if (!conf.getPassword().isEmpty()) {
-            urlParams.add("password=" + conf.getPassword());
+        if (!cws.getApp().isEmpty()) {
+            urlParams.add("app=" + cws.getApp());
         }
-        if (!conf.getApp().isEmpty()) {
-            urlParams.add("app=" + conf.getApp());
-        }
-        if (!conf.getKey().isEmpty()) {
-            urlParams.add("key=" + conf.getKey());
+        if (!cws.getKey().isEmpty()) {
+            urlParams.add("key=" + cws.getKey());
         }
         if (!params.isEmpty()) {
             urlParams.add(params);
@@ -108,10 +106,12 @@ public class WebService {
         if (!mac.isEmpty()) {
             urlParams.add("mac=" + mac);
         }
-        if (!conf.getClient().isEmpty()) {
-            urlParams.add("client=" + conf.getClient());
+        if (!cws.getClient().isEmpty()) {
+            urlParams.add("client=" + cws.getClient());
         }
-        urlString += "Sindical" + "/api/" + page;
+        if(!cws.getContext().isEmpty()) {
+            urlString += cws.getContext() + "/ws/" + page;
+        }
         for (int i = 0; i < urlParams.size(); i++) {
             if (i == 0) {
                 urlString += "?" + urlParams.get(i).toString();

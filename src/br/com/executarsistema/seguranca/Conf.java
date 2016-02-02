@@ -30,26 +30,11 @@ public class Conf {
      */
     private String executable;
     private String parans;
-    private String url;
     private Boolean app_browser;
 
     public Conf() {
-        this.context = "";
-        this.client = "";
-        this.ip = "";
-        this.filial = "";
-        this.app = "";
-        this.key = "";
-        this.user = "";
-        this.password = "";
-        this.method = "";
-        this.action = "";
-        this.port = null;
-        this.web_service = false;
-        this.ssl = false;
         this.executable = "";
         this.parans = "";
-        this.url = "";
         this.app_browser = false;
     }
 
@@ -73,91 +58,14 @@ public class Conf {
             }
             JSONObject jSONObject = new JSONObject(json);
             try {
-                context = jSONObject.getString("context");
-            } catch (Exception e) {
-                logs.save("Conf Erro", "context: Configuração errada. Verique o arquivo de configuração (conf). " + e.getMessage());
-            }
-            try {
-                client = jSONObject.getString("client");
-            } catch (Exception e) {
-                logs.save("Conf Erro", "client: Configuração errada. Verique o arquivo de configuração (conf). " + e.getMessage());
-            }
-            try {
-                ip = jSONObject.getString("ip");
-            } catch (Exception e) {
-                logs.save("Conf Erro", "(String) ip: Configuração errada.  Verique o arquivo de configuração (conf)." + e.getMessage());
-            }
-            try {
-                filial = jSONObject.getString("filial");
-            } catch (Exception e) {
-                //  logs.save("Conf Erro", "(Boolean) filial: Configuração errada.  Verique o arquivo de configuração (conf)." + e.getMessage());
-            }
-
-            try {
-                web_service = jSONObject.getBoolean("web_service");
-                if (web_service == null) {
-                    return;
-                }
-            } catch (Exception e) {
-                //  logs.save("Conf Erro", "(Boolean) web_service: Configuração errada.  Verique o arquivo de configuração (conf)." + e.getMessage());
-            }
-            if (web_service) {
-                try {
-                    app = jSONObject.getString("app");
-                } catch (Exception e) {
-                    // logs.save("Conf Erro", "(String) app: Configuração errada.  Verique o arquivo de configuração (conf)." + e.getMessage());
-                }
-                try {
-                    // key = jSONObject.getString("key");
-                } catch (Exception e) {
-                    // logs.save("Conf Erro", "(String) key: Configuração errada.  Verique o arquivo de configuração (conf)." + e.getMessage());
-                }
-                try {
-                    // user = jSONObject.getString("user");
-                } catch (Exception e) {
-                    // logs.save("Conf Erro", "(String) user: Configuração errada.  Verique o arquivo de configuração (conf)." + e.getMessage());
-                }
-                try {
-                    // password = jSONObject.getString("password");
-                } catch (Exception e) {
-                    // logs.save("Conf Erro", "(String) password: Configuração errada.  Verique o arquivo de configuração (conf)." + e.getMessage());
-                }
-                try {
-                    // action = jSONObject.getString("action");
-                } catch (Exception e) {
-                    logs.save("Conf Erro", "(String) action: Configuração errada.  Verique o arquivo de configuração (conf)." + e.getMessage());
-                }
-                try {
-                    port = jSONObject.getInt("port");
-                } catch (Exception e) {
-                    logs.save("Conf Erro", "(Integer) port: Configuração errada.  Verique o arquivo de configuração (conf)." + e.getMessage());
-                }
-                try {
-                    // method = jSONObject.getString("method");
-                } catch (Exception e) {
-                    logs.save("Conf Erro", "(String) method: Configuração errada.  Verique o arquivo de configuração (conf)." + e.getMessage());
-                }
-                try {
-                    // ssl = jSONObject.getBoolean("ssl");
-                } catch (Exception e) {
-                    logs.save("Conf Erro", "(Boolean) ssl: Configuração errada.  Verique o arquivo de configuração (conf)." + e.getMessage());
-                }
-
-            }
-            try {
                 executable = jSONObject.getString("executable");
             } catch (Exception e) {
-                logs.save("Conf Erro", "(String) executable: Configuração errada.  Verique o arquivo de configuração (conf)." + e.getMessage());
+                // logs.save("Conf Erro", "(String) executable: Configuração errada.  Verique o arquivo de configuração (conf)." + e.getMessage());
             }
             try {
                 parans = jSONObject.getString("parans");
             } catch (Exception e) {
                 logs.save("Conf Erro", "(String) parans: Configuração errada.  Verique o arquivo de configuração (conf)." + e.getMessage());
-            }
-            try {
-                url = jSONObject.getString("url");
-            } catch (Exception e) {
-                logs.save("Conf Erro", "(String) url: Configuração errada.  Verique o arquivo de configuração (conf)." + e.getMessage());
             }
             try {
                 app_browser = jSONObject.getBoolean("app_browser");
@@ -280,14 +188,6 @@ public class Conf {
 
     public void setParans(String parans) {
         this.parans = parans;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public Boolean getApp_browser() {

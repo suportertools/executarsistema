@@ -26,4 +26,25 @@
     <jdkPreference>preferJdk</jdkPreference>
     <runtimeBits>32/64</runtimeBits>
   </jre>
+  <versionInfo>
+    <fileVersion>1.0.0.0</fileVersion>
+    <txtFileVersion>1.0</txtFileVersion>
+    <fileDescription>Executar Sistema</fileDescription>
+    <copyright>Rtools Comércio de Sistemas Ltda</copyright>
+    <productVersion>1.0.0.0</productVersion>
+    <txtProductVersion>1.0</txtProductVersion>
+    <productName>Executar Sistema</productName>
+    <companyName>Rtools Comércio de Sistemas Ltda</companyName>
+    <internalName>Executar Sistema</internalName>
+    <originalFilename>ExecutarSistema.exe</originalFilename>
+  </versionInfo>
+  <messages>
+    <startupErr>Ocorreu um erro ao iniciar o aplicativo.</startupErr>
+    <bundledJreErr>
+Esta aplicação foi configurado para usar um pacote Java Runtime Environment , mas o tempo de execução está ausente ou corrompido .</bundledJreErr>
+    <jreVersionErr>Esta aplicação requer um Java Runtime Environment</jreVersionErr>
+    <launcherErr>O registro refere-se a uma instalação inexistente Java Runtime Environment ou o tempo de execução está corrompido.</launcherErr>
+    <instanceAlreadyExistsMsg>
+Uma instância do aplicativo já está em execução .</instanceAlreadyExistsMsg>
+  </messages>
 </launch4jConfig>

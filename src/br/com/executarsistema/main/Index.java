@@ -1,19 +1,11 @@
 package br.com.executarsistema.main;
 
-import br.com.executarsistema.dao.Dao;
 import br.com.executarsistema.seguranca.Conf;
-import br.com.executarsistema.seguranca.LiberaAcesso;
-import br.com.executarsistema.seguranca.LiberaAcessoDao;
-import br.com.executarsistema.seguranca.MacFilial;
-import br.com.executarsistema.seguranca.dao.MacFilialDao;
 import br.com.executarsistema.utils.Block;
 import br.com.executarsistema.utils.BlockInterface;
 import br.com.executarsistema.utils.Logs;
-import br.com.executarsistema.utils.Mac;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.Calendar;
-import java.util.Date;
+import br.com.executarsistema.utils.WebService;
+import com.google.gson.Gson;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -42,71 +34,60 @@ public final class Index extends JFrame {
     }
 
     public Index() {
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                close();
-                System.exit(0);
-            }
-        });
-        Conf conf = new Conf();
-        conf.loadJson();
-        // String mac = "65-46-54-65-46-54";
-        String mac = Mac.getInstance();
-        MacFilialDao macFilialDao = new MacFilialDao();
-        MacFilial macFilial = macFilialDao.findMacFilial(mac);
-        if (macFilial == null) {
+        Object result = WebService.GET("autenticar_dispositivo.jsf", "", "");
+        Status s = (Status) result;
+        if (s.getStatus_code() != 0) {
             JOptionPane.showMessageDialog(null,
-                    "Computador não registrado!",
+                    s.getStatus_details(),
                     "Validação",
                     JOptionPane.WARNING_MESSAGE);
             Logs logs = new Logs();
-            logs.save("index", "Computador não registrado!");
+            logs.save("index", s.getStatus_details());
             System.exit(0);
             return;
         }
-        LiberaAcessoDao liberaAcessoDao = new LiberaAcessoDao();
-        liberaAcessoDao.clear();
-        LiberaAcesso liberaAcesso = liberaAcessoDao.findByMac(macFilial);
-        if (liberaAcesso == null) {
-            Date date = new Date();
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(date);
-            cal.add(Calendar.MINUTE, 3);
-            Date expirationDate = cal.getTime();
-            liberaAcesso = new LiberaAcesso();
-            liberaAcesso.setExpira(expirationDate);
-            liberaAcesso.setMacFilial(macFilial);
-            if (!new Dao().save(liberaAcesso, true)) {
-                Logs logs = new Logs();
-                logs.save("index", "Erro ao salvar liberação de acesso!");
-                JOptionPane.showMessageDialog(null,
-                        "Ao salvar liberação de acesso!",
-                        "Erro",
-                        JOptionPane.WARNING_MESSAGE);
-                System.exit(0);
-            }
-        }
+//        LiberaAcessoDao liberaAcessoDao = new LiberaAcessoDao();
+//        liberaAcessoDao.clear();
+//        LiberaAcesso liberaAcesso = liberaAcessoDao.findByMac(macFilial);
+//        if (liberaAcesso == null) {
+//            Date date = new Date();
+//            Calendar cal = Calendar.getInstance();
+//            cal.setTime(date);
+//            cal.add(Calendar.MINUTE, 3);
+//            Date expirationDate = cal.getTime();
+//            liberaAcesso = new LiberaAcesso();
+//            liberaAcesso.setExpira(expirationDate);
+//            liberaAcesso.setMacFilial(macFilial);
+//            if (!new Dao().save(liberaAcesso, true)) {
+//                Logs logs = new Logs();
+//                logs.save("index", "Erro ao salvar liberação de acesso!");
+//                JOptionPane.showMessageDialog(null,
+//                        "Ao salvar liberação de acesso!",
+//                        "Erro",
+//                        JOptionPane.WARNING_MESSAGE);
+//                System.exit(0);
+//            }
+//        }
         try {
-            String url = "";
-            String context = "";
-            url += "\"" + conf.getExecutable() + "\" ";
-            if (!conf.getExecutable().contains("firefox")) {
-                url += " " + conf.getParans() + " ";
-            }
-            if (!conf.getContext().isEmpty()) {
-                context = conf.getContext() + "/";
-            }
-            if (conf.getApp_browser()) {
-                if (!conf.getExecutable().contains("firefox")) {
-                    url += " --app=\"http://" + conf.getUrl() + context + "?filial=" + mac + "\"";
-                } else {
-                    url += " \"http://" + conf.getUrl() + context + "?filial=" + mac + "\"";
-                }
-            } else {
-                url += " \"http://" + conf.getUrl() + context + "?filial=" + mac + "\"";
-            }
-            Runtime.getRuntime().exec(url);
+//            String url = "";
+//            String context = "";
+//            url += "\"" + conf.getExecutable() + "\" ";
+//            if (!conf.getExecutable().contains("firefox")) {
+//                url += " " + conf.getParans() + " ";
+//            }
+//            if (!conf.getContext().isEmpty()) {
+//                context = conf.getContext() + "/";
+//            }
+//            if (conf.getApp_browser()) {
+//                if (!conf.getExecutable().contains("firefox")) {
+//                    url += " --app=\"http://" + conf.getUrl() + context + "?filial=" + mac + "\"";
+//                } else {
+//                    url += " \"http://" + conf.getUrl() + context + "?filial=" + mac + "\"";
+//                }
+//            } else {
+//                url += " \"http://" + conf.getUrl() + context + "?filial=" + mac + "\"";
+//            }
+            // Runtime.getRuntime().exec(url);
         } catch (Exception e) {
             Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -115,6 +96,38 @@ public final class Index extends JFrame {
 
     public void close() {
         super.dispose();
+    }
+
+    public class Status {
+
+        private Integer status_code;
+        private String status_details;
+
+        public Status() {
+            this.status_code = 0;
+            this.status_details = "";
+        }
+
+        public Status(Integer status_code, String status_details) {
+            this.status_code = status_code;
+            this.status_details = status_details;
+        }
+
+        public Integer getStatus_code() {
+            return status_code;
+        }
+
+        public void setStatus_code(Integer status_code) {
+            this.status_code = status_code;
+        }
+
+        public String getStatus_details() {
+            return status_details;
+        }
+
+        public void setStatus_details(String status_details) {
+            this.status_details = status_details;
+        }
     }
 
 }

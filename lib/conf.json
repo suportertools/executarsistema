@@ -1,11 +1,5 @@
 {
-	"ip": "192.168.1.100",
-	"project": "",
-	"port": 5432,
-	"context": "Sindical",
-    "client": "Sindical",
     "executable": "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe",
 	"parans":"--incognito",
-	"url":"sindical.rtools.com.br:7070/Sindical/",
 	"app_browser": false
 }

@@ -17,23 +17,23 @@ import org.json.JSONObject;
 // http://localhost:8080/Sindical/web_service.jsf?client=Sindical&user=teste&password=123456&app=teste&key=123456&&method=GET&action=biometria
 public class WebService {
 
-    public static Object POST(String page, String action, String params) {
+    public static String POST(String page, String action, String params) {
         return execute(page, "POST", action, params);
     }
 
-    public static Object GET(String page, String action, String params) {
+    public static String GET(String page, String action, String params) {
         return execute(page, "GET", action, params);
     }
 
-    public static Object PUT(String page, String action, String params) {
+    public static String PUT(String page, String action, String params) {
         return execute(page, "PUT", action, params);
     }
 
-    public static Object DELETE(String page, String action, String params) {
+    public static String DELETE(String page, String action, String params) {
         return execute(page, "DELETE", action, params);
     }
 
-    public static JSONObject execute(String page, String method, String action, String params) {
+    public static String execute(String page, String method, String action, String params) {
         String mac = Mac.getInstance();
         ConfWebService cws = new ConfWebService();
         cws.loadJson();
@@ -109,9 +109,9 @@ public class WebService {
         if (!cws.getClient().isEmpty()) {
             urlParams.add("client=" + cws.getClient());
         }
-        if(!cws.getContext().isEmpty()) {
+        if (!cws.getContext().isEmpty()) {
             urlString += cws.getContext() + "/ws/" + page;
-        } 
+        }
         for (int i = 0; i < urlParams.size(); i++) {
             if (i == 0) {
                 urlString += "?" + urlParams.get(i).toString();
@@ -122,24 +122,14 @@ public class WebService {
         try {
             URL url = new URL(urlString);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
+            con.setUseCaches(true);
             con.setRequestMethod(method);
             try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
                 String str = in.readLine();
-                JSONObject obj = new JSONObject(str);
-                Integer status_code = obj.getInt("status_code");
-                String status_details = obj.getString("status_details");
-                if (status_code != 0) {
-                    JOptionPane.showMessageDialog(null,
-                            status_details,
-                            "Sistema",
-                            JOptionPane.WARNING_MESSAGE);
-                    Logs logs = new Logs();
-                    logs.save("web_service", status_details);
-                    System.exit(0);
-                }
-                return obj;
+                return str;
             }
-        } catch (IOException | JSONException | HeadlessException e) {
+        } catch (IOException | HeadlessException e) {
             JOptionPane.showMessageDialog(null,
                     string_errors,
                     "Arquivo de configuração > conf",

@@ -1,10 +1,14 @@
 package br.com.executarsistema.sistema.conf;
 
 import br.com.executarsistema.utils.Logs;
+import br.com.executarsistema.utils.Mac;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -217,6 +221,26 @@ public class ConfWebService {
 
     public void setContext(String context) {
         this.context = context;
+    }
+
+    public String getCurl() {
+        loadJson();
+        String urlString = "";
+        if (this.getSsl()) {
+            urlString += "https://";
+        } else {
+            urlString += "http://";
+        }
+        List urlParams = new ArrayList<>();
+        if (this.getPort() == null || this.getPort() == 80 || this.getPort() == 0) {
+            urlString += this.getUrl() + "/";
+        } else {
+            urlString += this.getUrl() + ":" + this.getPort() + "/";
+        }
+        if (!this.getContext().isEmpty()) {
+            urlString += this.getContext() + "/ws/" + this;
+        }
+        return urlString;
     }
 
 }

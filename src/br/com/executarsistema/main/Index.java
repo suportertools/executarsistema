@@ -5,6 +5,7 @@ import br.com.executarsistema.utils.Block;
 import br.com.executarsistema.utils.BlockInterface;
 import br.com.executarsistema.utils.Logs;
 import br.com.executarsistema.utils.Mac;
+import br.com.executarsistema.utils.UpdateJar;
 import br.com.executarsistema.webservice.classes.WSExecutarSistema;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -18,6 +19,7 @@ import rtools.WebService;
 public final class Index extends JFrame {
 
     public static void main(String args[]) {
+        new UpdateJar().execute();
         if (!WebService.existConnection()) {
             int resposta;
             resposta = JOptionPane.showConfirmDialog(null, "Erro ao conectar ao dispositivo!", "Mensagem do Programa", JOptionPane.CLOSED_OPTION);

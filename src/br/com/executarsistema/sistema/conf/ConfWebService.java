@@ -252,7 +252,27 @@ public class ConfWebService {
             urlString += this.getUrl() + ":" + this.getPort() + "/";
         }
         if (!this.getContext().isEmpty()) {
-            urlString += this.getContext() + "/ws/" + this;
+            urlString += this.getContext() + "/ws/";
+        }
+        return urlString;
+    }
+    
+    public String getCurlFiles() {
+        loadJson();
+        String urlString = "";
+        if (this.getSsl()) {
+            urlString += "https://";
+        } else {
+            urlString += "http://";
+        }
+        List urlParams = new ArrayList<>();
+        if (this.getPort() == null || this.getPort() == 80 || this.getPort() == 0) {
+            urlString += this.getUrl() + "/";
+        } else {
+            urlString += this.getUrl() + ":" + this.getPort() + "/";
+        }
+        if (!this.getContext().isEmpty()) {
+            urlString += this.getContext() + "/resources/jar/ExecutarSistema/";
         }
         return urlString;
     }

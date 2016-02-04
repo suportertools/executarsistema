@@ -1,5 +1,7 @@
 package br.com.executarsistema.utils;
 
+import java.io.File;
+
 public class Path {
 
     public static String getUserPath() {
@@ -15,6 +17,16 @@ public class Path {
         } catch (Exception ex) {
             return null;
         }
+        return path;
+    }
+
+    public static String getRealPath() {
+        String path = "";
+        try {
+            path = new File(".").getCanonicalPath();
+        } catch (Exception ex) {
+        }
+        path = path.replace("\\", "\\\\");
         return path;
     }
 }

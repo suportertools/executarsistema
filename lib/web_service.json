@@ -5,6 +5,6 @@
     "ssl": false,
     "user": "rtools",
     "password": "Ty5*6h",
-    "app": "ExecutarSistema",
+    "app": "Biometria",
     "port": "8080"	
 }

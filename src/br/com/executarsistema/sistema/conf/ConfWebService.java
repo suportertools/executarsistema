@@ -1,14 +1,12 @@
 package br.com.executarsistema.sistema.conf;
 
 import br.com.executarsistema.utils.Logs;
-import br.com.executarsistema.utils.Mac;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +24,7 @@ public class ConfWebService {
     private String action;
     private Integer port;
     private Boolean ssl;
+    private Boolean session;
 
     public ConfWebService() {
         this.url = "";
@@ -39,9 +38,10 @@ public class ConfWebService {
         this.action = "";
         this.port = null;
         this.ssl = false;
+        this.session = false;
     }
 
-    public ConfWebService(String url, String context, String client, String app, String key, String user, String password, String method, String action, Integer port, Boolean ssl) {
+    public ConfWebService(String url, String context, String client, String app, String key, String user, String password, String method, String action, Integer port, Boolean ssl, Boolean session) {
         this.url = url;
         this.client = client;
         this.context = context;
@@ -53,6 +53,7 @@ public class ConfWebService {
         this.action = action;
         this.port = port;
         this.ssl = ssl;
+        this.session = session;
     }
 
     public void loadJson() {
@@ -126,6 +127,11 @@ public class ConfWebService {
             }
             try {
                 ssl = jSONObject.getBoolean("ssl");
+            } catch (Exception e) {
+                // logs.save("Conf Erro", "(Boolean) ssl: Configuração errada.  Verique o arquivo de configuração (conf)." + e.getMessage());
+            }
+            try {
+                session = jSONObject.getBoolean("session");
             } catch (Exception e) {
                 // logs.save("Conf Erro", "(Boolean) ssl: Configuração errada.  Verique o arquivo de configuração (conf)." + e.getMessage());
             }
@@ -221,6 +227,14 @@ public class ConfWebService {
 
     public void setContext(String context) {
         this.context = context;
+    }
+
+    public Boolean getSession() {
+        return session;
+    }
+
+    public void setSession(Boolean session) {
+        this.session = session;
     }
 
     public String getCurl() {

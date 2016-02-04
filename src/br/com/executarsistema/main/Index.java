@@ -1,42 +1,33 @@
 package br.com.executarsistema.main;
 
 import br.com.executarsistema.seguranca.Conf;
-import br.com.executarsistema.sistema.conf.ConfWebService;
 import br.com.executarsistema.utils.Block;
 import br.com.executarsistema.utils.BlockInterface;
 import br.com.executarsistema.utils.Logs;
 import br.com.executarsistema.utils.Mac;
-import br.com.executarsistema.utils.WebService;
 import br.com.executarsistema.webservice.classes.WSExecutarSistema;
-import br.com.executarsistema.webservice.classes.WSStatus;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import rtools.WebService;
 
 public final class Index extends JFrame {
 
     public static void main(String args[]) {
-        Conf conf = new Conf();
-        ConfWebService cws = new ConfWebService();
-        conf.loadJson();
-        URL url;
-        try {
-            url = new URL(cws.getCurl());
-            URLConnection conn = url.openConnection();
-            conn.setRequestProperty("Cookie", "client=" + cws.getClient() + "; user=" + cws.getUser() + "; mac=" + Mac.getInstance() + "");
-            conn.connect();
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+        if (!WebService.existConnection()) {
+            int resposta;
+            resposta = JOptionPane.showConfirmDialog(null, "Erro ao conectar ao dispositivo!", "Mensagem do Programa", JOptionPane.CLOSED_OPTION);
+            if (resposta == 0) {
+                System.exit(0);
+            }
+            System.exit(0);
         }
+        Conf conf = new Conf();
+        conf.loadJson();
         Block.TYPE = "" + 1;
         if (!Block.registerInstance()) {
             // instance already running.
@@ -56,24 +47,24 @@ public final class Index extends JFrame {
 
     public Index() {
         try {
-            Conf conf = new Conf();
-            conf.loadJson();
-            String result = WebService.GET("autenticar_dispositivo.jsf", "", "");
+            WebService webService = new WebService();
+            webService.GET("autenticar_dispositivo");
             Gson gson = new Gson();
-            WSStatus wSStatus = gson.fromJson(result, WSStatus.class);
-            if (wSStatus.getCodigo() != 0) {
+            if (webService.wSStatus().getCodigo() != 0) {
                 JOptionPane.showMessageDialog(null,
-                        wSStatus.getDescricao(),
+                        webService.wSStatus().getDescricao(),
                         "Validação",
                         JOptionPane.WARNING_MESSAGE);
                 Logs logs = new Logs();
-                logs.save("index", wSStatus.getDescricao());
+                logs.save("index", webService.wSStatus().getDescricao());
                 System.exit(0);
                 return;
             }
+            Conf conf = new Conf();
+            conf.loadJson();
             String mac = Mac.getInstance();
-            result = WebService.GET("executar_sistema.jsf", "", "");
-            WSExecutarSistema executarSistema = gson.fromJson(result, WSExecutarSistema.class);
+            webService.GET("executar_sistema");
+            WSExecutarSistema executarSistema = (WSExecutarSistema) webService.object(new WSExecutarSistema());
             String url = "";
             url += "\"" + conf.getExecutable() + "\" ";
             if (!conf.getExecutable().contains("firefox")) {

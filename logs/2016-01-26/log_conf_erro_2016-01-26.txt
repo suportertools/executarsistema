@@ -1,0 +1,9 @@
+(Boolean) filial: Configuração errada.  Verique o arquivo de configuração (conf).JSONObject["filial"] not found.
+(Boolean) web_service: Configuração errada.  Verique o arquivo de configuração (conf).JSONObject["web_service"] not found.
+(String) app_browser: Configuração errada.  Verique o arquivo de configuração (conf).JSONObject["app_browser"] not found.
+(Boolean) filial: Configuração errada.  Verique o arquivo de configuração (conf).JSONObject["filial"] not found.
+(Boolean) web_service: Configuração errada.  Verique o arquivo de configuração (conf).JSONObject["web_service"] not found.
+(String) app_browser: Configuração errada.  Verique o arquivo de configuração (conf).JSONObject["app_browser"] not found.
+(Boolean) filial: Configuração errada.  Verique o arquivo de configuração (conf).JSONObject["filial"] not found.
+(Boolean) web_service: Configuração errada.  Verique o arquivo de configuração (conf).JSONObject["web_service"] not found.
+(String) app_browser: Configuração errada.  Verique o arquivo de configuração (conf).JSONObject["app_browser"] not found.

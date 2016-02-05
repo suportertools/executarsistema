@@ -51,6 +51,11 @@ public final class Index extends JFrame {
         try {
             WebService webService = new WebService();
             webService.GET("autenticar_dispositivo");
+            try {
+                webService.execute();
+            } catch (Exception ex) {
+                // Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+            }
             Gson gson = new Gson();
             if (webService.wSStatus().getCodigo() != 0) {
                 JOptionPane.showMessageDialog(null,
@@ -66,6 +71,11 @@ public final class Index extends JFrame {
             conf.loadJson();
             String mac = Mac.getInstance();
             webService.GET("executar_sistema");
+            try {
+                webService.execute();
+            } catch (Exception ex) {
+                // Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+            }
             WSExecutarSistema executarSistema = (WSExecutarSistema) webService.object(new WSExecutarSistema());
             String url = "";
             url += "\"" + conf.getExecutable() + "\" ";

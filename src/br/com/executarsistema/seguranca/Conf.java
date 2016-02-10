@@ -46,7 +46,7 @@ public class Conf {
         }
         Logs logs = new Logs();
         try {
-            File file = new File(path + "\\lib\\conf.json");
+            File file = new File(path + "\\lib\\conf\\conf.json");
             if (!file.exists()) {
                 return;
             }

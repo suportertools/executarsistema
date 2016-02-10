@@ -11,8 +11,11 @@ import br.com.executarsistema.utils.UpdateJar;
 import br.com.executarsistema.webservice.classes.WSExecutarSistema;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,119 +91,132 @@ public final class Index extends JFrame {
             Boolean find = false;
             String executable = conf.getExecutable();
             executable = executable.toLowerCase();
-            switch (conf.getExecutable()) {
-                case "firefox":
-                case "mozilla":
-                    loop = true;
-                    break;
-                case "chrome":
-                case "google":
-                    loop = true;
-                    break;
-                case "opera":
-                    loop = true;
-                    break;
-                case "safari":
-                    loop = true;
-                    break;
-                case "ie":
-                    loop = true;
-                    break;
-                default:
-                    break;
-            }
-            if (loop && Property.getOSName().toLowerCase().contains("windows")) {
-                String programFilesX86 = Property.getProgramFilesX86();
-                String programFilesX64 = Property.getProgramFilesX64();
-                File f;
-                File[] fs;
-                if (programFilesX86 != null) {
-                    f = new File(programFilesX86);
-                    fs = f.listFiles();
-                    if (fs.length > 0) {
-                        if (fs.length > 0) {
-                            for (int i = 0; i < fs.length; i++) {
-                                if (executable.equals("google") || executable.equals("chrome")) {
-                                    if (fs[i].getPath().toLowerCase().contains("google")) {
-                                        File[] fsi = fs[i].listFiles();
-                                        for (int x = 0; x < fsi.length; x++) {
-                                            if (fsi[x].getPath().toLowerCase().contains("chrome")) {
-                                                if (new File(fsi[x].getPath() + "\\Application\\chrome.exe").exists()) {
-                                                    conf.setExecutable(fsi[x].getPath() + "\\Application\\chrome.exe");
-                                                    find = true;
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                    }
-                                } else if (executable.equals("mozilla") || executable.equals("firefox")) {
-                                    if (new File(fs[i].getPath() + "\\firefox.exe").exists()) {
-                                        conf.setExecutable(fs[i].getPath() + "\\firefox.exe");
-                                        find = true;
-                                        break;
-                                    }
-                                } else if (executable.equals("Internet Explorer") || executable.equals("ie")) {
-                                    if (new File(fs[i].getPath() + "\\iexplore.exe").exists()) {
-                                        conf.setExecutable(fs[i].getPath() + "\\iexplore.exe");
-                                        find = true;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
+            if (!conf.getExecutable().isEmpty()) {
+
+                switch (conf.getExecutable()) {
+                    case "firefox":
+                    case "mozilla":
+                        loop = true;
+                        break;
+                    case "chrome":
+                    case "google":
+                        loop = true;
+                        break;
+                    case "opera":
+                        loop = true;
+                        break;
+                    case "safari":
+                        loop = true;
+                        break;
+                    case "ie":
+                        loop = true;
+                        break;
+                    default:
+                        break;
                 }
-                if (!find) {
-                    if (programFilesX64 != null) {
-                        f = new File(programFilesX64);
+                if (loop && Property.getOSName().toLowerCase().contains("windows")) {
+                    String programFilesX86 = Property.getProgramFilesX86();
+                    String programFilesX64 = Property.getProgramFilesX64();
+                    File f;
+                    File[] fs;
+                    if (programFilesX86 != null) {
+                        f = new File(programFilesX86);
                         fs = f.listFiles();
                         if (fs.length > 0) {
-                            for (int i = 0; i < fs.length; i++) {
-                                if (executable.equals("google") || executable.equals("chrome")) {
-                                    if (fs[i].getPath().toLowerCase().contains("google")) {
-                                        File[] fsi = fs[i].listFiles();
-                                        for (int x = 0; x < fsi.length; x++) {
-                                            if (fsi[x].getPath().toLowerCase().contains("chrome")) {
-                                                if (new File(fsi[x].getPath() + "\\Application\\chrome.exe").exists()) {
-                                                    conf.setExecutable(fsi[x].getPath() + "\\Application\\chrome.exe");
-                                                    find = true;
-                                                    break;
+                            if (fs.length > 0) {
+                                for (int i = 0; i < fs.length; i++) {
+                                    if (executable.equals("google") || executable.equals("chrome")) {
+                                        if (fs[i].getPath().toLowerCase().contains("google")) {
+                                            File[] fsi = fs[i].listFiles();
+                                            for (int x = 0; x < fsi.length; x++) {
+                                                if (fsi[x].getPath().toLowerCase().contains("chrome")) {
+                                                    if (new File(fsi[x].getPath() + "\\Application\\chrome.exe").exists()) {
+                                                        conf.setExecutable(fsi[x].getPath() + "\\Application\\chrome.exe");
+                                                        find = true;
+                                                        break;
+                                                    }
                                                 }
                                             }
                                         }
+                                    } else if (executable.equals("mozilla") || executable.equals("firefox")) {
+                                        if (new File(fs[i].getPath() + "\\firefox.exe").exists()) {
+                                            conf.setExecutable(fs[i].getPath() + "\\firefox.exe");
+                                            find = true;
+                                            break;
+                                        }
+                                    } else if (executable.equals("Internet Explorer") || executable.equals("ie")) {
+                                        if (new File(fs[i].getPath() + "\\iexplore.exe").exists()) {
+                                            conf.setExecutable(fs[i].getPath() + "\\iexplore.exe");
+                                            find = true;
+                                            break;
+                                        }
                                     }
-                                } else if (executable.equals("mozilla") || executable.equals("firefox")) {
-                                    if (new File(fs[i].getPath() + "\\firefox.exe").exists()) {
-                                        conf.setExecutable(fs[i].getPath() + "\\firefox.exe");
-                                        find = true;
-                                        break;
-                                    }
-                                } else if (executable.equals("Internet Explorer") || executable.equals("ie")) {
-                                    if (new File(fs[i].getPath() + "\\iexplore.exe").exists()) {
-                                        conf.setExecutable(fs[i].getPath() + "\\iexplore.exe");
-                                        find = true;
-                                        break;
+                                }
+                            }
+                        }
+                    }
+                    if (!find) {
+                        if (programFilesX64 != null) {
+                            f = new File(programFilesX64);
+                            fs = f.listFiles();
+                            if (fs.length > 0) {
+                                for (int i = 0; i < fs.length; i++) {
+                                    if (executable.equals("google") || executable.equals("chrome")) {
+                                        if (fs[i].getPath().toLowerCase().contains("google")) {
+                                            File[] fsi = fs[i].listFiles();
+                                            for (int x = 0; x < fsi.length; x++) {
+                                                if (fsi[x].getPath().toLowerCase().contains("chrome")) {
+                                                    if (new File(fsi[x].getPath() + "\\Application\\chrome.exe").exists()) {
+                                                        conf.setExecutable(fsi[x].getPath() + "\\Application\\chrome.exe");
+                                                        find = true;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    } else if (executable.equals("mozilla") || executable.equals("firefox")) {
+                                        if (new File(fs[i].getPath() + "\\firefox.exe").exists()) {
+                                            conf.setExecutable(fs[i].getPath() + "\\firefox.exe");
+                                            find = true;
+                                            break;
+                                        }
+                                    } else if (executable.equals("Internet Explorer") || executable.equals("ie")) {
+                                        if (new File(fs[i].getPath() + "\\iexplore.exe").exists()) {
+                                            conf.setExecutable(fs[i].getPath() + "\\iexplore.exe");
+                                            find = true;
+                                            break;
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
-            url += "\"" + conf.getExecutable() + "\" ";
-            if (!executable.contains("firefox") && !executable.contains("Internet Explorer") && !executable.contains("ie")) {
-                url += " " + conf.getParans() + " ";
-            }
-            if (conf.getApp_browser()) {
+                url += "\"" + conf.getExecutable() + "\" ";
                 if (!executable.contains("firefox") && !executable.contains("Internet Explorer") && !executable.contains("ie")) {
-                    url += " --app=\"" + executarSistema.getUrl() + "?filial=" + mac + "\"";
+                    url += " " + conf.getParans() + " ";
+                }
+                if (conf.getApp_browser()) {
+                    if (!executable.contains("firefox") && !executable.contains("Internet Explorer") && !executable.contains("ie")) {
+                        url += " --app=\"" + executarSistema.getUrl() + "?filial=" + mac + "\"";
+                    } else {
+                        url += " \"" + executarSistema.getUrl() + "?filial=" + mac + "\"";
+                    }
                 } else {
                     url += " \"" + executarSistema.getUrl() + "?filial=" + mac + "\"";
                 }
+                Runtime.getRuntime().exec(url);
             } else {
-                url += " \"" + executarSistema.getUrl() + "?filial=" + mac + "\"";
+                url += "" + executarSistema.getUrl() + "?filial=" + mac + "";
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        Desktop.getDesktop().browse(new URI(url));
+                    } catch (URISyntaxException ex) {
+                        Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             }
-            Runtime.getRuntime().exec(url);
+
         } catch (JsonSyntaxException | IOException e) {
             Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, e);
         }

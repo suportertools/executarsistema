@@ -3,6 +3,7 @@ package br.com.executarsistema.main;
 import br.com.executarsistema.seguranca.Conf;
 import br.com.executarsistema.utils.Block;
 import br.com.executarsistema.utils.BlockInterface;
+import br.com.executarsistema.utils.CopyFilesConf;
 import br.com.executarsistema.utils.Logs;
 import br.com.executarsistema.utils.Mac;
 import br.com.executarsistema.utils.UpdateJar;
@@ -19,6 +20,7 @@ import rtools.WebService;
 public final class Index extends JFrame {
 
     public static void main(String args[]) {
+        new CopyFilesConf().load();
         new UpdateJar().execute();
         if (!WebService.existConnection()) {
             int resposta;

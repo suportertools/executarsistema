@@ -93,7 +93,7 @@ public final class Index extends JFrame {
             executable = executable.toLowerCase();
             if (!conf.getExecutable().isEmpty()) {
 
-                switch (conf.getExecutable()) {
+                switch (executable) {
                     case "firefox":
                     case "mozilla":
                         loop = true;

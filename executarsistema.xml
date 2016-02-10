@@ -13,7 +13,7 @@
   <stayAlive>false</stayAlive>
   <restartOnCrash>false</restartOnCrash>
   <manifest></manifest>
-  <icon>D:\MEUS PROJETOS\GIT\executarsistema\src\images\favicon.ico</icon>
+  <icon>D:\MEUS PROJETOS\GIT\executarsistema\src\resources\images\favicon.ico</icon>
   <classPath>
     <mainClass>br.com.executarsistema.main.Index</mainClass>
   </classPath>

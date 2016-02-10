@@ -24,7 +24,7 @@ public final class Index extends JFrame {
         new UpdateJar().execute();
         if (!WebService.existConnection()) {
             int resposta;
-            resposta = JOptionPane.showConfirmDialog(null, "Erro ao conectar ao dispositivo!", "Mensagem do Programa", JOptionPane.CLOSED_OPTION);
+            resposta = JOptionPane.showConfirmDialog(null, "Erro ao conectar ao servidor!", "Mensagem do Programa", JOptionPane.CLOSED_OPTION);
             if (resposta == 0) {
                 System.exit(0);
             }
